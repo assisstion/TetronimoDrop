@@ -17,6 +17,9 @@
 		B408FD731C3C2899003B0DFB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B408FD711C3C2899003B0DFB /* LaunchScreen.storyboard */; };
 		B408FD7E1C3C2899003B0DFB /* Tetromino_DropTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD7D1C3C2899003B0DFB /* Tetromino_DropTests.m */; };
 		B408FD891C3C2899003B0DFB /* Tetromino_DropUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD881C3C2899003B0DFB /* Tetromino_DropUITests.m */; };
+		B4472AAF1C3EA1D4006B5565 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = B4472AAE1C3EA1D4006B5565 /* Game.m */; };
+		B4472AB21C3EA1DF006B5565 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = B4472AB11C3EA1DE006B5565 /* Block.m */; };
+		B4472AB51C3EA1EF006B5565 /* Gameboard.m in Sources */ = {isa = PBXBuildFile; fileRef = B4472AB41C3EA1EF006B5565 /* Gameboard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +59,12 @@
 		B408FD841C3C2899003B0DFB /* Tetromino DropUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tetromino DropUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B408FD881C3C2899003B0DFB /* Tetromino_DropUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tetromino_DropUITests.m; sourceTree = "<group>"; };
 		B408FD8A1C3C2899003B0DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4472AAD1C3EA1D4006B5565 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		B4472AAE1C3EA1D4006B5565 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		B4472AB01C3EA1DE006B5565 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
+		B4472AB11C3EA1DE006B5565 /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
+		B4472AB31C3EA1EF006B5565 /* Gameboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gameboard.h; sourceTree = "<group>"; };
+		B4472AB41C3EA1EF006B5565 /* Gameboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gameboard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +119,12 @@
 				B408FD621C3C2898003B0DFB /* AppDelegate.m */,
 				B408FD641C3C2898003B0DFB /* GameScene.h */,
 				B408FD651C3C2898003B0DFB /* GameScene.m */,
+				B4472AAD1C3EA1D4006B5565 /* Game.h */,
+				B4472AAE1C3EA1D4006B5565 /* Game.m */,
+				B4472AB01C3EA1DE006B5565 /* Block.h */,
+				B4472AB11C3EA1DE006B5565 /* Block.m */,
+				B4472AB31C3EA1EF006B5565 /* Gameboard.h */,
+				B4472AB41C3EA1EF006B5565 /* Gameboard.m */,
 				B408FD671C3C2898003B0DFB /* GameScene.sks */,
 				B408FD691C3C2899003B0DFB /* GameViewController.h */,
 				B408FD6A1C3C2899003B0DFB /* GameViewController.m */,
@@ -279,8 +294,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4472AAF1C3EA1D4006B5565 /* Game.m in Sources */,
+				B4472AB51C3EA1EF006B5565 /* Gameboard.m in Sources */,
 				B408FD6B1C3C2899003B0DFB /* GameViewController.m in Sources */,
 				B408FD631C3C2898003B0DFB /* AppDelegate.m in Sources */,
+				B4472AB21C3EA1DF006B5565 /* Block.m in Sources */,
 				B408FD661C3C2898003B0DFB /* GameScene.m in Sources */,
 				B408FD601C3C2898003B0DFB /* main.m in Sources */,
 			);
@@ -508,6 +526,7 @@
 				B408FD8F1C3C2899003B0DFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B408FD901C3C2899003B0DFB /* Build configuration list for PBXNativeTarget "Tetromino DropTests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +535,7 @@
 				B408FD921C3C2899003B0DFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B408FD931C3C2899003B0DFB /* Build configuration list for PBXNativeTarget "Tetromino DropUITests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +544,7 @@
 				B408FD951C3C2899003B0DFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
