@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6BCADFEB1C4017D50036B146 /* BlockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFEA1C4017D50036B146 /* BlockData.m */; settings = {ASSET_TAGS = (); }; };
 		6BCADFEE1C401A310036B146 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFED1C401A310036B146 /* Coordinate.m */; settings = {ASSET_TAGS = (); }; };
+		6BEDCD621C440B9D003749FD /* block16.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEDCD611C440B9D003749FD /* block16.png */; settings = {ASSET_TAGS = (); }; };
+		6BEDCD641C440BA8003749FD /* block32.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEDCD631C440BA8003749FD /* block32.png */; settings = {ASSET_TAGS = (); }; };
 		B408FD601C3C2898003B0DFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD5F1C3C2898003B0DFB /* main.m */; };
 		B408FD631C3C2898003B0DFB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD621C3C2898003B0DFB /* AppDelegate.m */; };
 		B408FD661C3C2898003B0DFB /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD651C3C2898003B0DFB /* GameScene.m */; };
@@ -46,6 +48,8 @@
 		6BCADFEA1C4017D50036B146 /* BlockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockData.m; sourceTree = "<group>"; };
 		6BCADFEC1C401A310036B146 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
 		6BCADFED1C401A310036B146 /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinate.m; sourceTree = "<group>"; };
+		6BEDCD611C440B9D003749FD /* block16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block16.png; sourceTree = "<group>"; };
+		6BEDCD631C440BA8003749FD /* block32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = block32.png; sourceTree = "<group>"; };
 		B408FD5B1C3C2898003B0DFB /* Tetromino Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tetromino Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B408FD5F1C3C2898003B0DFB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B408FD611C3C2898003B0DFB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 		B408FD5E1C3C2898003B0DFB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6BEDCD631C440BA8003749FD /* block32.png */,
+				6BEDCD611C440B9D003749FD /* block16.png */,
 				B408FD5F1C3C2898003B0DFB /* main.m */,
 			);
 			name = "Supporting Files";
@@ -277,6 +283,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BEDCD641C440BA8003749FD /* block32.png in Resources */,
+				6BEDCD621C440B9D003749FD /* block16.png in Resources */,
 				B408FD681C3C2898003B0DFB /* GameScene.sks in Resources */,
 				B408FD731C3C2899003B0DFB /* LaunchScreen.storyboard in Resources */,
 				B408FD701C3C2899003B0DFB /* Assets.xcassets in Resources */,

@@ -8,9 +8,16 @@
 
 #import "GameScene.h"
 
-@implementation GameScene
+@implementation GameScene{
+    int ticks;
+}
+
+const int spriteWidth = 32;
+const int spriteHeight = 32;
 
 -(void)didMoveToView:(SKView *)view {
+    
+    ticks = 0;
     /* Setup your scene here */
     SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     
@@ -20,15 +27,38 @@
                                    CGRectGetMidY(self.frame));
     
     [self addChild:myLabel];
+    
+    self.sprites = [[NSMutableArray alloc] init];
+    self.game = [[Game alloc] init];
+    [self setupBoard];
+}
+
+
+-(void)setupBoard{
+    int w = (int)[self.game.board.array count];
+    for(int i = 0; i < w; i++){
+        NSArray * row = [self.game.board.array objectAtIndex:i];
+        NSMutableArray * mut = [[NSMutableArray alloc] init];
+        [self.sprites addObject:mut];
+        int h = (int)[row count];
+        for(int j = 0; j < h; j++){
+            SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"block32"];
+            sprite.xScale = 1;
+            sprite.yScale = 1;
+            sprite.position = CGPointMake(CGRectGetMidX(self.frame) + (j - h/2) * (spriteWidth + 1), CGRectGetMidY(self.frame) - (i - w/2) * (spriteHeight + 1));
+            [self addChild:sprite];
+            [mut addObject:sprite];
+        }
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
-    for (UITouch *touch in touches) {
+    /*for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"block32"];
         
         sprite.xScale = 0.5;
         sprite.yScale = 0.5;
@@ -39,11 +69,31 @@
         [sprite runAction:[SKAction repeatActionForever:action]];
         
         [self addChild:sprite];
+    }*/
+    
+}
+
+-(void)renderBoard{
+    for(int i = 0; i < [self.game.board.array count]; i++){
+        NSArray * row = [self.game.board.array objectAtIndex:i];
+        for(int j = 0; j < [row count]; j++){
+            if([[row objectAtIndex:j] boolValue] == true){
+                [[self.sprites objectAtIndex:i] objectAtIndex:j].hidden = false;
+            }
+            else{
+                [[self.sprites objectAtIndex:i] objectAtIndex:j].hidden = true;
+            }
+        }
     }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
+    [self renderBoard];
+    ticks ++;
+    if(ticks > 100){
+        [self.game.board update];
+        ticks = 0;
+    }
 }
 
 @end

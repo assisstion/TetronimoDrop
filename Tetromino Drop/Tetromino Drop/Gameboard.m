@@ -11,8 +11,8 @@
 #import "BlockData.h"
 
 @implementation Gameboard
-static const int rows = 50;
-static const int columns = 50;
+static const int rows = 20;
+static const int columns = 10;
 -(instancetype) init
 {
     self = [super init];
