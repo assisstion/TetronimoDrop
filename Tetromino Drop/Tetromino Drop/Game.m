@@ -10,4 +10,10 @@
 
 @implementation Game
 
+-(void)start{
+    
+}
+-(void)pauseOrResume{
+    
+}
 @end

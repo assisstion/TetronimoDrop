@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6BCADFEB1C4017D50036B146 /* BlockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFEA1C4017D50036B146 /* BlockData.m */; settings = {ASSET_TAGS = (); }; };
+		6BCADFEE1C401A310036B146 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFED1C401A310036B146 /* Coordinate.m */; settings = {ASSET_TAGS = (); }; };
 		B408FD601C3C2898003B0DFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD5F1C3C2898003B0DFB /* main.m */; };
 		B408FD631C3C2898003B0DFB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD621C3C2898003B0DFB /* AppDelegate.m */; };
 		B408FD661C3C2898003B0DFB /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD651C3C2898003B0DFB /* GameScene.m */; };
@@ -40,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6BCADFE91C4017D50036B146 /* BlockData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockData.h; sourceTree = "<group>"; };
+		6BCADFEA1C4017D50036B146 /* BlockData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockData.m; sourceTree = "<group>"; };
+		6BCADFEC1C401A310036B146 /* Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinate.h; sourceTree = "<group>"; };
+		6BCADFED1C401A310036B146 /* Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coordinate.m; sourceTree = "<group>"; };
 		B408FD5B1C3C2898003B0DFB /* Tetromino Drop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tetromino Drop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B408FD5F1C3C2898003B0DFB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B408FD611C3C2898003B0DFB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -121,6 +127,10 @@
 				B408FD651C3C2898003B0DFB /* GameScene.m */,
 				B4472AAD1C3EA1D4006B5565 /* Game.h */,
 				B4472AAE1C3EA1D4006B5565 /* Game.m */,
+				6BCADFEC1C401A310036B146 /* Coordinate.h */,
+				6BCADFED1C401A310036B146 /* Coordinate.m */,
+				6BCADFE91C4017D50036B146 /* BlockData.h */,
+				6BCADFEA1C4017D50036B146 /* BlockData.m */,
 				B4472AB01C3EA1DE006B5565 /* Block.h */,
 				B4472AB11C3EA1DE006B5565 /* Block.m */,
 				B4472AB31C3EA1EF006B5565 /* Gameboard.h */,
@@ -230,6 +240,7 @@
 				TargetAttributes = {
 					B408FD5A1C3C2898003B0DFB = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 5TN8KE8A2Y;
 					};
 					B408FD781C3C2899003B0DFB = {
 						CreatedOnToolsVersion = 7.1;
@@ -295,8 +306,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4472AAF1C3EA1D4006B5565 /* Game.m in Sources */,
+				6BCADFEE1C401A310036B146 /* Coordinate.m in Sources */,
 				B4472AB51C3EA1EF006B5565 /* Gameboard.m in Sources */,
 				B408FD6B1C3C2899003B0DFB /* GameViewController.m in Sources */,
+				6BCADFEB1C4017D50036B146 /* BlockData.m in Sources */,
 				B408FD631C3C2898003B0DFB /* AppDelegate.m in Sources */,
 				B4472AB21C3EA1DF006B5565 /* Block.m in Sources */,
 				B408FD661C3C2898003B0DFB /* GameScene.m in Sources */,
@@ -439,10 +452,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Tetromino Drop/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.assisstion.Tetromino-Drop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -450,10 +467,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Tetromino Drop/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.assisstion.Tetromino-Drop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -463,6 +484,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "Tetromino DropTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.assisstion.Tetromino-DropTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -475,6 +497,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "Tetromino DropTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.assisstion.Tetromino-DropTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -487,6 +510,7 @@
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = "Tetromino DropUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.assisstion.Tetromino-DropUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -499,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = "Tetromino DropUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.assisstion.Tetromino-DropUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

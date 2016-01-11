@@ -21,5 +21,6 @@
 -(BOOL) checkBlock: (Block*) block;
 -(void)holdBlock;
 -(void) nextBlock;
+-(void)permanent;
 
 @end
