@@ -37,7 +37,7 @@
 +(Block *)randomBlock: (Gameboard*) gameboard
 {
     Block* newBlock = [[Block alloc] init];
-    newBlock.type = arc4random()%7;
+    newBlock.type = 2;
     newBlock.gameboard = gameboard;
     return newBlock;
 

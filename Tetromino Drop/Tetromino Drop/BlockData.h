@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "Coordinate.h"
-
+#import "Block.h"
 @interface BlockData : NSObject
 
 @property NSArray <Coordinate *> * coordinates;
 
 +(BlockData *)defaultDataFromType:(int) type;
 +(BlockData *)getDataFromType:(int)type fromOrientation:(int)orientation withX:(int)x withY:(int)y;
++(BlockData *)getDataFromBlock:(Block *)block;
 
 @end

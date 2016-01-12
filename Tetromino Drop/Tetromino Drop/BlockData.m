@@ -7,6 +7,7 @@
 //
 
 #import "BlockData.h"
+#import "Block.h"
 
 @implementation BlockData
 
@@ -37,45 +38,45 @@
     switch (type) {
         case 0:
             [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:1 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:1];
-            [[data.coordinates objectAtIndex:0] setX:1 andY:1];
+            [[data.coordinates objectAtIndex:1] setX:1 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:1];
+            [[data.coordinates objectAtIndex:3] setX:1 andY:1];
             break;
         case 1:
             [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:1];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:2];
+            [[data.coordinates objectAtIndex:1] setX:0 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:1];
+            [[data.coordinates objectAtIndex:3] setX:0 andY:2];
             break;
         case 2:
             [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:1];
-            [[data.coordinates objectAtIndex:0] setX:-1 andY:1];
+            [[data.coordinates objectAtIndex:1] setX:0 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:1];
+            [[data.coordinates objectAtIndex:3] setX:-1 andY:1];
             break;
         case 3:
             [[data.coordinates objectAtIndex:0] setX:-1 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:1 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:1];
+            [[data.coordinates objectAtIndex:1] setX:0 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:1 andY:0];
+            [[data.coordinates objectAtIndex:3] setX:0 andY:1];
             break;
         case 4:
             [[data.coordinates objectAtIndex:0] setX:-1 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
-            [[data.coordinates objectAtIndex:0] setX:1 andY:-1];
+            [[data.coordinates objectAtIndex:1] setX:0 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:-1];
+            [[data.coordinates objectAtIndex:3] setX:1 andY:-1];
             break;
         case 5:
             [[data.coordinates objectAtIndex:0] setX:1 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
-            [[data.coordinates objectAtIndex:0] setX:-1 andY:-1];
+            [[data.coordinates objectAtIndex:1] setX:0 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:-1];
+            [[data.coordinates objectAtIndex:3] setX:-1 andY:-1];
             break;
         case 6:
             [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:0] setX:0 andY:1];
-            [[data.coordinates objectAtIndex:0] setX:1 andY:1];
+            [[data.coordinates objectAtIndex:1] setX:0 andY:0];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:1];
+            [[data.coordinates objectAtIndex:3] setX:1 andY:1];
             break;
         default:
             break;
@@ -118,5 +119,10 @@
     return data;
 }
 
++(BlockData *)getDataFromBlock:(Block *)block
+{
+  return  [BlockData getDataFromType:block.type fromOrientation:block.orientation
+                         withX:block.x withY: block.y];
 
+}
 @end

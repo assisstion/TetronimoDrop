@@ -19,6 +19,10 @@ static const int columns = 10;
     if (self)
     {
         self.currentBlock = [Block randomBlock:self];
+        while (![self checkBlock:self.currentBlock])
+        {
+            self.currentBlock.y++;
+        }
         self.ghost = [[Block alloc] initFromBlock:self.currentBlock];
         self.ghost.y = [self findGhost];
         self.hold = nil;
@@ -30,6 +34,7 @@ static const int columns = 10;
         }
     }
     return self;
+    
 }
 
 +(NSMutableArray *) emptyRow
@@ -108,6 +113,10 @@ static const int columns = 10;
     BlockData * data = [BlockData getDataFromType:self.currentBlock.type fromOrientation:self.currentBlock.orientation
                                             withX:self.currentBlock.x withY:self.currentBlock.y];
     for(Coordinate * coord in data.coordinates){
+        if (coord.y <0 || coord.y >= rows|| coord.x<0 || coord.x >= columns)
+        {
+            return false;
+        }
         if([[[self.array objectAtIndex:coord.y] objectAtIndex:coord.x] boolValue] == true){
             return false;
         }
@@ -123,10 +132,10 @@ static const int columns = 10;
     else{
         self.currentBlock.y++;
     }
+    
 }
 -(void)permanent{
-    BlockData * data = [BlockData getDataFromType:self.currentBlock.type fromOrientation:self.currentBlock.orientation
-                         withX:self.currentBlock.x withY:self.currentBlock.y];
+    BlockData * data = [BlockData getDataFromBlock:self.currentBlock];
     for(Coordinate * coord in data.coordinates){
         [[self.array objectAtIndex:coord.y] replaceObjectAtIndex:coord.x withObject:[[NSNumber alloc] initWithBool:true]];
     }

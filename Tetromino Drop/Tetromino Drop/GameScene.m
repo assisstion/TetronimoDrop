@@ -7,6 +7,8 @@
 //
 
 #import "GameScene.h"
+#import "Coordinate.h"
+#import "BlockData.h"
 
 @implementation GameScene{
     int ticks;
@@ -85,12 +87,16 @@ const int spriteHeight = 32;
             }
         }
     }
+    for(Coordinate * coord in [BlockData getDataFromBlock:self.game.board.currentBlock].coordinates){
+        [[self.sprites objectAtIndex:coord.y] objectAtIndex:coord.x].hidden = false;
+    }
+
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     [self renderBoard];
     ticks ++;
-    if(ticks > 100){
+    if(ticks > 20){
         [self.game.board update];
         ticks = 0;
     }
