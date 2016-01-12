@@ -58,7 +58,7 @@
             [[data.coordinates objectAtIndex:0] setX:-1 andY:0];
             [[data.coordinates objectAtIndex:1] setX:0 andY:0];
             [[data.coordinates objectAtIndex:2] setX:1 andY:0];
-            [[data.coordinates objectAtIndex:3] setX:0 andY:1];
+            [[data.coordinates objectAtIndex:3] setX:0 andY:-1];
             break;
         case 4:
             [[data.coordinates objectAtIndex:0] setX:-1 andY:0];

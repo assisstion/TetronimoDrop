@@ -13,20 +13,21 @@
 @implementation Gameboard
 static const int rows = 20;
 static const int columns = 10;
+static const int queuelength = 3;
 -(instancetype) init
 {
     self = [super init];
     if (self)
     {
-        self.currentBlock = [Block randomBlock:self];
-        while (![self checkBlock:self.currentBlock])
-        {
-            self.currentBlock.y++;
-        }
+        self.currentBlock = [self getNextBlock];
         self.ghost = [[Block alloc] initFromBlock:self.currentBlock];
         self.ghost.y = [self findGhost];
         self.hold = nil;
         self.queue = [[NSMutableArray alloc] init];
+        for (int i =0; i<queuelength; i++)
+        {
+            [self.queue addObject:[self getNextBlock]];
+        }
         self.array = [[NSMutableArray alloc] init];
         for (int i =0; i<rows; i++)
         {
@@ -110,10 +111,9 @@ static const int columns = 10;
 
 -(BOOL) checkBlock: (Block*) block
 {
-    BlockData * data = [BlockData getDataFromType:self.currentBlock.type fromOrientation:self.currentBlock.orientation
-                                            withX:self.currentBlock.x withY:self.currentBlock.y];
+    BlockData * data = [BlockData getDataFromBlock:block];
     for(Coordinate * coord in data.coordinates){
-        if (coord.y <0 || coord.y >= rows|| coord.x<0 || coord.x >= columns)
+        if (coord.y < 0 || coord.y >= rows || coord.x < 0 || coord.x >= columns)
         {
             return false;
         }
@@ -125,9 +125,14 @@ static const int columns = 10;
 }
 -(void)update
 {
+    NSLog(@"%i", [self findGhost]);
+    NSLog(@"%i", self.currentBlock.y);
     self.ghost.y = [self findGhost];
     if(self.currentBlock.y == self.ghost.y){
         [self permanent];
+        self.currentBlock = [self.queue objectAtIndex:0];
+        [self.queue removeObjectAtIndex:0];
+        [self.queue addObject:[self getNextBlock]];
     }
     else{
         self.currentBlock.y++;
@@ -139,6 +144,15 @@ static const int columns = 10;
     for(Coordinate * coord in data.coordinates){
         [[self.array objectAtIndex:coord.y] replaceObjectAtIndex:coord.x withObject:[[NSNumber alloc] initWithBool:true]];
     }
+}
+-(Block *)getNextBlock{
+    Block * newBlock= [Block randomBlock:self];
+    newBlock.x = columns / 2;
+    while (![self checkBlock:newBlock])
+    {
+        newBlock.y++;
+    }
+    return newBlock;
 }
 
 

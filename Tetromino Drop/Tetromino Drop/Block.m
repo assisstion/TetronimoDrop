@@ -27,7 +27,7 @@
     self = [super init];
     if (self)
     {
-        self.x =otherBlock.x;
+        self.x = otherBlock.x;
         self.y = otherBlock.y;
         self.type = otherBlock.type;
         self.orientation = otherBlock.orientation;
@@ -37,7 +37,7 @@
 +(Block *)randomBlock: (Gameboard*) gameboard
 {
     Block* newBlock = [[Block alloc] init];
-    newBlock.type = 2;
+    newBlock.type = arc4random_uniform(7);
     newBlock.gameboard = gameboard;
     return newBlock;
 
