@@ -28,6 +28,21 @@ const int spriteHeight = 32;
     [view addGestureRecognizer: swipeLeftGesture];
     [view addGestureRecognizer: swipeDownGesture];
     [view addGestureRecognizer: tapGesture];
+
+    
+    
+    SKLabelNode * myLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
+    myLabel.text = @"Game Over!";
+    myLabel.fontColor = [UIColor redColor];
+    myLabel.fontSize = 45;
+    myLabel.position = CGPointMake(0, -myLabel.frame.size.height/2);
+    
+    self.gameOverBox = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(myLabel.frame.size.width, myLabel.frame.size.height)];
+    self.gameOverBox.position = CGPointMake(CGRectGetMidX(self.frame),
+                                      CGRectGetMidY(self.frame));
+    
+    [self.gameOverBox addChild:myLabel];
+    [self addChild:self.gameOverBox];
     
     self.sprites = [[NSMutableArray alloc] init];
     self.game = [[Game alloc] init];
@@ -78,6 +93,12 @@ const int spriteHeight = 32;
 }
 
 -(void)renderBoard{
+    if(self.game.board.gameOver){
+        self.gameOverBox.hidden = false;
+    }
+    else{
+        self.gameOverBox.hidden = true;
+    }
     for(int i = 0; i < [self.game.board.array count]; i++){
         NSArray * row = [self.game.board.array objectAtIndex:i];
         for(int j = 0; j < [row count]; j++){
