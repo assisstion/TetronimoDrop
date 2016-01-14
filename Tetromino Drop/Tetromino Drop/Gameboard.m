@@ -10,7 +10,9 @@
 #import "Block.h"
 #import "BlockData.h"
 
-@implementation Gameboard
+@implementation Gameboard{
+    bool justUpdated;
+}
 static const int rows = 20;
 static const int columns = 10;
 static const int queuelength = 3;
@@ -33,6 +35,7 @@ static const int queuelength = 3;
         {
             [self.array addObject:[Gameboard emptyRow]];
         }
+        self.rowsCleared = 0;
     }
     return self;
     
@@ -56,6 +59,7 @@ static const int queuelength = 3;
             [self.array removeObjectAtIndex:i];
             [self.array insertObject:[Gameboard emptyRow] atIndex:0];
             i--;
+            self.rowsCleared++;
         }
     }
     
@@ -139,12 +143,19 @@ static const int queuelength = 3;
 
 -(void)update
 {
+    if(self.gameOver){
+        return;
+    }
     self.ghost.y = [self findGhost];
     if(self.currentBlock.y == self.ghost.y){
         [self permanent];
         self.currentBlock = [self.queue objectAtIndex:0];
+        [self.currentBlock blockChanged];
         if(![self checkBlock:self.currentBlock]){
-            NSLog(@"Game over!");
+            self.gameOver = true;
+            self.ghost = nil;
+            self.currentBlock = nil;
+            return;
         }
         [self.queue removeObjectAtIndex:0];
         [self.queue addObject:[self getNextBlock]];
@@ -153,7 +164,13 @@ static const int queuelength = 3;
         self.currentBlock.y++;
     }
     [self deleteRows];
-    
+    justUpdated = true;
+}
+
+-(bool)justUpdated{
+    bool just = justUpdated;
+    justUpdated = false;
+    return just;
 }
 -(void)permanent{
     BlockData * data = [BlockData getDataFromBlock:self.currentBlock];

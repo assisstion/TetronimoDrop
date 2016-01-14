@@ -16,4 +16,5 @@
 @property Gameboard * board;
 -(void)start;
 -(void)pauseOrResume;
+-(void)update:(CFTimeInterval)timeInterval;
 @end

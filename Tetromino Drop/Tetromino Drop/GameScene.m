@@ -10,9 +10,7 @@
 #import "Coordinate.h"
 #import "BlockData.h"
 
-@implementation GameScene{
-    int ticks;
-}
+@implementation GameScene
 
 const int spriteWidth = 32;
 const int spriteHeight = 32;
@@ -21,14 +19,15 @@ const int spriteHeight = 32;
     
     UISwipeGestureRecognizer* swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRight:)];
     UISwipeGestureRecognizer* swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
+    UISwipeGestureRecognizer* swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown:)];
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
     [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
+    [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
     [view addGestureRecognizer: swipeRightGesture];
     [view addGestureRecognizer: swipeLeftGesture];
+    [view addGestureRecognizer: swipeDownGesture];
     [view addGestureRecognizer: tapGesture];
-    
-    ticks = 0;
     
     self.sprites = [[NSMutableArray alloc] init];
     self.game = [[Game alloc] init];
@@ -45,6 +44,10 @@ const int spriteHeight = 32;
     [self.game.board.currentBlock moveLeft];
 }
 
+-(void) handleSwipeDown:(UISwipeGestureRecognizer *) recognizer{
+    [self.game.board.currentBlock instantDrop];
+}
+
 -(void) handleTap:(UISwipeGestureRecognizer *) recognizer{
     [self.game.board.currentBlock rotateRight];
 }
@@ -58,12 +61,12 @@ const int spriteHeight = 32;
         [self.sprites addObject:mut];
         int h = (int)[row count];
         for(int j = 0; j < h; j++){
-            SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"block32"];
-            sprite.xScale = 1;
-            sprite.yScale = 1;
-            sprite.position = CGPointMake(CGRectGetMidX(self.frame) + (j - h/2) * (spriteWidth + 1), CGRectGetMidY(self.frame) - (i - w/2) * (spriteHeight + 1));
-            [self addChild:sprite];
-            [mut addObject:sprite];
+            SKShapeNode * shape = [SKShapeNode shapeNodeWithRectOfSize: CGSizeMake(32, 32)];
+            shape.fillColor = [SKColor blueColor];
+            shape.position = CGPointMake(CGRectGetMidX(self.frame) + (j - h/2) * (spriteWidth + 1), CGRectGetMidY(self.frame) - (i - w/2) * (spriteHeight + 1));
+            
+            [self addChild:shape];
+            [mut addObject:shape];
         }
     }
 }
@@ -79,26 +82,32 @@ const int spriteHeight = 32;
         NSArray * row = [self.game.board.array objectAtIndex:i];
         for(int j = 0; j < [row count]; j++){
             if([[row objectAtIndex:j] boolValue] == true){
-                [[self.sprites objectAtIndex:i] objectAtIndex:j].hidden = false;
+                SKShapeNode * shape = [[self.sprites objectAtIndex:i] objectAtIndex:j];
+                shape.fillColor = [SKColor colorWithRed:0 green:0 blue:1 alpha:1];
             }
             else{
-                [[self.sprites objectAtIndex:i] objectAtIndex:j].hidden = true;
+                SKShapeNode * shape = [[self.sprites objectAtIndex:i] objectAtIndex:j];
+                shape.fillColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
             }
         }
     }
-    for(Coordinate * coord in [BlockData getDataFromBlock:self.game.board.currentBlock].coordinates){
-        [[self.sprites objectAtIndex:coord.y] objectAtIndex:coord.x].hidden = false;
+    if(self.game.board.ghost != nil){
+        for(Coordinate * coord in [BlockData getDataFromBlock:self.game.board.ghost].coordinates){
+            SKShapeNode * shape = [[self.sprites objectAtIndex:coord.y] objectAtIndex:coord.x];
+            shape.fillColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+        }
     }
-
+    if(self.game.board.currentBlock != nil){
+        for(Coordinate * coord in [BlockData getDataFromBlock:self.game.board.currentBlock].coordinates){
+            SKShapeNode * shape = [[self.sprites objectAtIndex:coord.y] objectAtIndex:coord.x];
+            shape.fillColor = [SKColor colorWithRed:0 green:0 blue:1 alpha:1];
+        }
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     [self renderBoard];
-    ticks ++;
-    if(ticks > 20){
-        [self.game.board update];
-        ticks = 0;
-    }
+    [self.game update:currentTime];
 }
 
 @end

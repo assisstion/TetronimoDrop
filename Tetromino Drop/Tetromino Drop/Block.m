@@ -58,6 +58,7 @@
             self.orientation = 0;
         }
     }
+    [self blockChanged];
 }
 -(void)rotateRight
 {    self.orientation ++;
@@ -74,6 +75,7 @@
             self.orientation = 3;
         }
     }
+    [self blockChanged];
 }
 -(void)moveLeft
 {
@@ -83,7 +85,7 @@
         self.x ++;
     }
     
-    
+    [self blockChanged];
 }
 -(void)moveRight
 {
@@ -92,14 +94,19 @@
     {
         self.x--;
     }
-    
+    [self blockChanged];
 }
 -(void)instantDrop
 {
     self.y = self.gameboard.ghost.y;
-    
+    [self blockChanged];
+    [self.gameboard update];
 }
 
 
+-(void)blockChanged{
+    self.gameboard.ghost = [[Block alloc] initFromBlock:self];
+    self.gameboard.ghost.y = [self.gameboard findGhost];
+}
 
 @end

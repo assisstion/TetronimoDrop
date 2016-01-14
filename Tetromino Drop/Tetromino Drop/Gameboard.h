@@ -10,6 +10,8 @@
 @class Block;
 @interface Gameboard : NSObject
 
+@property int rowsCleared;
+@property bool gameOver;
 @property Block * currentBlock;
 @property Block * ghost;
 @property Block * hold;
@@ -22,5 +24,7 @@
 -(void)holdBlock;
 -(void) nextBlock;
 -(void)permanent;
+-(int)findGhost;
+-(bool)justUpdated;
 
 @end

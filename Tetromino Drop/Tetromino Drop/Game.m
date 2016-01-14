@@ -8,7 +8,10 @@
 
 #import "Game.h"
 
-@implementation Game
+@implementation Game{
+    double previousTime;
+    double ticks;
+}
 
 -(instancetype)init{
     self = [super init];
@@ -17,8 +20,25 @@
 
 -(void)start{
     self.board = [[Gameboard alloc] init];
+    ticks = 0;
+    previousTime = 0;
 }
 -(void)pauseOrResume{
     
+}
+
+-(void)update:(CFTimeInterval)currentTime{
+    ticks += currentTime - previousTime;
+    previousTime = currentTime;
+    if(ticks > [self getTickInterval]){
+        [self.board update];
+    }
+    if([self.board justUpdated]){
+        ticks = 0;
+    }
+}
+
+-(double)getTickInterval{
+    return 1/log(0.1*self.board.rowsCleared+M_E);
 }
 @end

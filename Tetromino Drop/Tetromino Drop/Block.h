@@ -23,4 +23,5 @@
 -(void)moveRight;
 +(Block *)randomBlock: (Gameboard*) gameboard;
 -(instancetype)initFromBlock: (Block*) otherBlock;
+-(void)blockChanged;
 @end
