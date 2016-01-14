@@ -19,20 +19,34 @@ const int spriteHeight = 32;
 
 -(void)didMoveToView:(SKView *)view {
     
+    UISwipeGestureRecognizer* swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRight:)];
+    UISwipeGestureRecognizer* swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
+    [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
+    [view addGestureRecognizer: swipeRightGesture];
+    [view addGestureRecognizer: swipeLeftGesture];
+    [view addGestureRecognizer: tapGesture];
+    
     ticks = 0;
-    /* Setup your scene here */
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    
-    myLabel.text = @"Hello, World!";
-    myLabel.fontSize = 45;
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
-    
-    [self addChild:myLabel];
     
     self.sprites = [[NSMutableArray alloc] init];
     self.game = [[Game alloc] init];
+    [self.game start];
     [self setupBoard];
+    
+}
+
+-(void) handleSwipeRight:(UISwipeGestureRecognizer *) recognizer{
+    [self.game.board.currentBlock moveRight];
+}
+
+-(void) handleSwipeLeft:(UISwipeGestureRecognizer *) recognizer{
+    [self.game.board.currentBlock moveLeft];
+}
+
+-(void) handleTap:(UISwipeGestureRecognizer *) recognizer{
+    [self.game.board.currentBlock rotateRight];
 }
 
 
@@ -57,21 +71,6 @@ const int spriteHeight = 32;
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
-    /*for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"block32"];
-        
-        sprite.xScale = 0.5;
-        sprite.yScale = 0.5;
-        sprite.position = location;
-        
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
-    }*/
     
 }
 

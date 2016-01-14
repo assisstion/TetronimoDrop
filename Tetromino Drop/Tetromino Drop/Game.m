@@ -12,14 +12,11 @@
 
 -(instancetype)init{
     self = [super init];
-    if(self){
-        self.board = [[Gameboard alloc] init];
-    }
     return self;
 }
 
 -(void)start{
-    
+    self.board = [[Gameboard alloc] init];
 }
 -(void)pauseOrResume{
     

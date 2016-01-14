@@ -49,10 +49,10 @@
             [[data.coordinates objectAtIndex:3] setX:0 andY:2];
             break;
         case 2:
-            [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
+            [[data.coordinates objectAtIndex:0] setX:-1 andY:0];
             [[data.coordinates objectAtIndex:1] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:2] setX:0 andY:1];
-            [[data.coordinates objectAtIndex:3] setX:-1 andY:1];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:-1];
+            [[data.coordinates objectAtIndex:3] setX:0 andY:-2];
             break;
         case 3:
             [[data.coordinates objectAtIndex:0] setX:-1 andY:0];
@@ -73,10 +73,10 @@
             [[data.coordinates objectAtIndex:3] setX:-1 andY:-1];
             break;
         case 6:
-            [[data.coordinates objectAtIndex:0] setX:0 andY:-1];
+            [[data.coordinates objectAtIndex:0] setX:1 andY:-0];
             [[data.coordinates objectAtIndex:1] setX:0 andY:0];
-            [[data.coordinates objectAtIndex:2] setX:0 andY:1];
-            [[data.coordinates objectAtIndex:3] setX:1 andY:1];
+            [[data.coordinates objectAtIndex:2] setX:0 andY:-1];
+            [[data.coordinates objectAtIndex:3] setX:0 andY:-2];
             break;
         default:
             break;
@@ -95,17 +95,19 @@
             case 1:
                 for(Coordinate * coord in data.coordinates){
                     [coord flipXY];
-                    [coord invert];
+                    [coord invertX];
                 }
                 break;
             case 2:
                 for(Coordinate * coord in data.coordinates){
-                    [coord invert];
+                    [coord invertX];
+                    [coord invertY];
                 }
                 break;
             case 3:
                 for(Coordinate * coord in data.coordinates){
                     [coord flipXY];
+                    [coord invertY];
                 }
                 break;
             default:

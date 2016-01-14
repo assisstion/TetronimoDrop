@@ -16,6 +16,7 @@
 -(instancetype)initWithX:(int)x andY:(int)y;
 -(void)setX:(int)x andY:(int)y;
 -(void)flipXY;
--(void)invert;
+-(void)invertX;
+-(void)invertY;
 
 @end

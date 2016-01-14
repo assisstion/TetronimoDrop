@@ -9,7 +9,9 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Game.h"
 
-@interface GameScene : SKScene
+@interface GameScene : SKScene <UIGestureRecognizerDelegate>
+
+@property UIRotationGestureRecognizer* rotationGR;
 
 @property Game * game;
 @property NSMutableArray <NSMutableArray <SKSpriteNode *> *> * sprites;

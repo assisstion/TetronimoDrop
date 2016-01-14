@@ -54,7 +54,7 @@ static const int queuelength = 3;
         if([Gameboard isEmpty:[self.array objectAtIndex:i]])
         {
             [self.array removeObjectAtIndex:i];
-            [self.array addObject:[Gameboard emptyRow]];
+            [self.array insertObject:[Gameboard emptyRow] atIndex:0];
             i--;
         }
     }
@@ -102,10 +102,11 @@ static const int queuelength = 3;
 - (int) findGhost
 {
     Block * ghost = [[Block alloc] initFromBlock:self.currentBlock];
-    ghost.y = rows - 1;
-    while(![self checkBlock:ghost]){
-        ghost.y--;
+    ghost.y = self.currentBlock.y;
+    while([self checkBlock:ghost]){
+        ghost.y++;
     }
+    ghost.y--;
     return ghost.y;
 }
 
@@ -123,20 +124,35 @@ static const int queuelength = 3;
     }
     return true;
 }
+
+-(BOOL) onScreen: (Block *) block
+{
+    BlockData * data = [BlockData getDataFromBlock:block];
+    for(Coordinate * coord in data.coordinates){
+        if (coord.y < 0 || coord.y >= rows || coord.x < 0 || coord.x >= columns)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 -(void)update
 {
-    NSLog(@"%i", [self findGhost]);
-    NSLog(@"%i", self.currentBlock.y);
     self.ghost.y = [self findGhost];
     if(self.currentBlock.y == self.ghost.y){
         [self permanent];
         self.currentBlock = [self.queue objectAtIndex:0];
+        if(![self checkBlock:self.currentBlock]){
+            NSLog(@"Game over!");
+        }
         [self.queue removeObjectAtIndex:0];
         [self.queue addObject:[self getNextBlock]];
     }
     else{
         self.currentBlock.y++;
     }
+    [self deleteRows];
     
 }
 -(void)permanent{
@@ -148,7 +164,7 @@ static const int queuelength = 3;
 -(Block *)getNextBlock{
     Block * newBlock= [Block randomBlock:self];
     newBlock.x = columns / 2;
-    while (![self checkBlock:newBlock])
+    while (![self onScreen:newBlock])
     {
         newBlock.y++;
     }

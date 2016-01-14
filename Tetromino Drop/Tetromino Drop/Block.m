@@ -50,6 +50,14 @@
     {
         self.orientation = 3;
     }
+    if (![self.gameboard checkBlock:self])
+    {
+        self.orientation ++;
+        if (self.orientation > 3)
+        {
+            self.orientation = 0;
+        }
+    }
 }
 -(void)rotateRight
 {    self.orientation ++;
@@ -58,7 +66,14 @@
     {
         self.orientation = 0;
     }
-
+    if (![self.gameboard checkBlock:self])
+    {
+        self.orientation --;
+        if (self.orientation < 0)
+        {
+            self.orientation = 3;
+        }
+    }
 }
 -(void)moveLeft
 {

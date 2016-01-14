@@ -30,8 +30,11 @@
     self.y = z;
 }
 
--(void)invert{
+-(void)invertX{
     self.x = -self.x;
+}
+
+-(void)invertY{
     self.y = -self.y;
 }
 
