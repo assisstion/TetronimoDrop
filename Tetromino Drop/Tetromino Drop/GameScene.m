@@ -21,6 +21,10 @@ const int spriteHeight = 32;
     UISwipeGestureRecognizer* swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
     UISwipeGestureRecognizer* swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeDown:)];
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    UILongPressGestureRecognizer *longPressGesture= [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    longPressGesture.minimumPressDuration = 1.0; //seconds
+    longPressGesture.delegate = self;
     [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
     [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
     [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
@@ -28,43 +32,82 @@ const int spriteHeight = 32;
     [view addGestureRecognizer: swipeLeftGesture];
     [view addGestureRecognizer: swipeDownGesture];
     [view addGestureRecognizer: tapGesture];
-
+    [view addGestureRecognizer:longPressGesture];
     
     
     SKLabelNode * myLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
-    myLabel.text = @"Game Over!";
+    myLabel.text = @"Game Over! Tap to Restart.";
     myLabel.fontColor = [UIColor redColor];
-    myLabel.fontSize = 45;
+    myLabel.fontSize = 32;
     myLabel.position = CGPointMake(0, -myLabel.frame.size.height/2);
     
-    self.gameOverBox = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:CGSizeMake(myLabel.frame.size.width, myLabel.frame.size.height)];
+    self.gameOverBox = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:0 green:0 blue:0 alpha:1] size:CGSizeMake(myLabel.frame.size.width, myLabel.frame.size.height)];
+    self.gameOverBox.colorBlendFactor = 1;
     self.gameOverBox.position = CGPointMake(CGRectGetMidX(self.frame),
                                       CGRectGetMidY(self.frame));
     
-    [self.gameOverBox addChild:myLabel];
-    [self addChild:self.gameOverBox];
+    SKLabelNode * myLabel2 = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
+    myLabel2.text = @"Game Paused. Long Tap to Resume.";
+    myLabel2.fontColor = [UIColor redColor];
+    myLabel2.fontSize = 24;
+    myLabel2.position = CGPointMake(0, -myLabel2.frame.size.height/2);
+    
+    self.gamePausedBox = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:0 green:0 blue:0 alpha:1] size:CGSizeMake(myLabel2.frame.size.width, myLabel2.frame.size.height)];
+    self.gamePausedBox.colorBlendFactor = 1;
+    self.gamePausedBox.position = CGPointMake(CGRectGetMidX(self.frame),
+                                            CGRectGetMidY(self.frame));
+    
+    
     
     self.sprites = [[NSMutableArray alloc] init];
     self.game = [[Game alloc] init];
     [self.game start];
     [self setupBoard];
     
+    [self.gamePausedBox addChild:myLabel2];
+    [self addChild:self.gamePausedBox];
+    
+    [self.gameOverBox addChild:myLabel];
+    [self addChild:self.gameOverBox];
+    
 }
 
 -(void) handleSwipeRight:(UISwipeGestureRecognizer *) recognizer{
+    if (self.game.paused){
+        return;
+    }
     [self.game.board.currentBlock moveRight];
 }
 
 -(void) handleSwipeLeft:(UISwipeGestureRecognizer *) recognizer{
+    if (self.game.paused){
+        return;
+    }
     [self.game.board.currentBlock moveLeft];
 }
 
 -(void) handleSwipeDown:(UISwipeGestureRecognizer *) recognizer{
+    if (self.game.paused){
+        return;
+    }
     [self.game.board.currentBlock instantDrop];
 }
 
--(void) handleTap:(UISwipeGestureRecognizer *) recognizer{
+-(void) handleTap:(UITapGestureRecognizer *) recognizer{
+    if(self.game.board.gameOver)
+    {
+        [self.game start];
+    }
+    if (self.game.paused){
+        return;
+    }
     [self.game.board.currentBlock rotateRight];
+}
+-(void) handleLongPress:(UILongPressGestureRecognizer *) recognizer{
+    if(recognizer.state == UIGestureRecognizerStateBegan)
+    {
+    [self.game pauseOrResume];
+    }
 }
 
 
@@ -93,8 +136,17 @@ const int spriteHeight = 32;
 }
 
 -(void)renderBoard{
+    if(self.game.paused)
+    {
+        self.gamePausedBox.hidden = false;
+    }
+    else
+    {
+        self.gamePausedBox.hidden = true;
+    }
     if(self.game.board.gameOver){
         self.gameOverBox.hidden = false;
+        self.gamePausedBox.hidden = true;
     }
     else{
         self.gameOverBox.hidden = true;

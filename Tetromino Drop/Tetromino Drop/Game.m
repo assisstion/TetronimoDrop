@@ -22,12 +22,18 @@
     self.board = [[Gameboard alloc] init];
     ticks = 0;
     previousTime = 0;
+    self.paused = false;
+    self.score = 0;
 }
 -(void)pauseOrResume{
-    
+    self.paused = !self.paused;
 }
 
 -(void)update:(CFTimeInterval)currentTime{
+    if (self.paused)
+    {
+        return;
+    }
     ticks += currentTime - previousTime;
     previousTime = currentTime;
     if(ticks > [self getTickInterval]){

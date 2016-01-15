@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6BCADFEB1C4017D50036B146 /* BlockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFEA1C4017D50036B146 /* BlockData.m */; settings = {ASSET_TAGS = (); }; };
-		6BCADFEE1C401A310036B146 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFED1C401A310036B146 /* Coordinate.m */; settings = {ASSET_TAGS = (); }; };
-		6BEDCD621C440B9D003749FD /* block16.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEDCD611C440B9D003749FD /* block16.png */; settings = {ASSET_TAGS = (); }; };
-		6BEDCD641C440BA8003749FD /* block32.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEDCD631C440BA8003749FD /* block32.png */; settings = {ASSET_TAGS = (); }; };
+		6BCADFEB1C4017D50036B146 /* BlockData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFEA1C4017D50036B146 /* BlockData.m */; };
+		6BCADFEE1C401A310036B146 /* Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCADFED1C401A310036B146 /* Coordinate.m */; };
+		6BEDCD621C440B9D003749FD /* block16.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEDCD611C440B9D003749FD /* block16.png */; };
+		6BEDCD641C440BA8003749FD /* block32.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BEDCD631C440BA8003749FD /* block32.png */; };
 		B408FD601C3C2898003B0DFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD5F1C3C2898003B0DFB /* main.m */; };
 		B408FD631C3C2898003B0DFB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD621C3C2898003B0DFB /* AppDelegate.m */; };
 		B408FD661C3C2898003B0DFB /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B408FD651C3C2898003B0DFB /* GameScene.m */; };

@@ -14,6 +14,7 @@
 @property UIRotationGestureRecognizer* rotationGR;
 
 @property SKSpriteNode *gameOverBox;
+@property SKSpriteNode *gamePausedBox;
 @property Game * game;
 @property NSMutableArray <NSMutableArray <SKShapeNode *> *> * sprites;
 

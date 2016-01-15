@@ -10,9 +10,8 @@
 #import "Gameboard.h"
 
 @interface Game : NSObject
-@property int timePassed;
 @property int score;
-@property int level;
+@property bool paused;
 @property Gameboard * board;
 -(void)start;
 -(void)pauseOrResume;
