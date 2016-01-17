@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 assisstion. All rights reserved.
 //
 
+#import "Gameboard.h"
 #import "GameScene.h"
 #import "Coordinate.h"
 #import "BlockData.h"
@@ -16,6 +17,7 @@
 
 const int spriteWidth = 32;
 const int spriteHeight = 32;
+const double offset = 1.5;
 
 -(void)didMoveToView:(SKView *)view {
     
@@ -79,6 +81,19 @@ const int spriteHeight = 32;
     self.blocksPlacedLabel.position = CGPointMake(CGRectGetMidX(self.frame),
                                            CGRectGetMidY(self.frame) - self.frame.size.height / 2 + 50);
     
+    self.holdLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
+    self.holdLabel.text = @"Hold:";
+    self.holdLabel.fontColor = [UIColor blueColor];
+    self.holdLabel.fontSize = 24;
+    self.holdLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 165,
+                                                  CGRectGetMidY(self.frame) + 335);
+    
+    self.queueLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
+    self.queueLabel.text = @"Queue:";
+    self.queueLabel.fontColor = [UIColor blueColor];
+    self.queueLabel.fontSize = 24;
+    self.queueLabel.position = CGPointMake(CGRectGetMidX(self.frame) + 165,
+                                          CGRectGetMidY(self.frame)  + 200);
     self.sprites = [[NSMutableArray alloc] init];
     self.game = [[Game alloc] init];
     [self.game start];
@@ -92,8 +107,44 @@ const int spriteHeight = 32;
     
     [self addChild:self.scoreLabel];
     [self addChild:self.blocksPlacedLabel];
+    [self addChild:self.holdLabel];
+    [self addChild:self.queueLabel];
     
- 
+    NSURL *musicFile = [[NSBundle mainBundle] URLForResource:@"tetris"
+                                               withExtension:@"mp3"];
+    self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile
+                                                                  error:nil];
+    self.backgroundMusic.numberOfLoops = -1;
+    [self.backgroundMusic play];
+    
+    self.hold = [GameScene newTetromino];
+    
+    for(SKShapeNode * shape in self.hold){
+        shape.hidden = true;
+        shape.fillColor = [SKColor blueColor];
+        [self addChild:shape];
+    }
+    
+    NSMutableArray * mut = [[NSMutableArray alloc] init];
+    for(int i = 0; i < self.game.board.queueLength; i++){
+        [mut addObject:[GameScene newTetromino]];
+    }
+    self.queue = [[NSArray alloc] initWithArray:mut];
+    for(NSArray<SKShapeNode *> * tetromino in self.queue){
+        for(SKShapeNode * shape in tetromino){
+            shape.hidden = true;
+            shape.fillColor = [SKColor blueColor];
+            [self addChild:shape];
+        }
+    }
+}
+
++(SKShapeNode *)newShape{
+    return [SKShapeNode shapeNodeWithRectOfSize: CGSizeMake(spriteWidth/offset, spriteHeight/offset)];
+}
+
++(NSArray<SKShapeNode *> *)newTetromino{
+    return @[[GameScene newShape], [GameScene newShape], [GameScene newShape], [GameScene newShape]];
 }
 
 -(void) handleSwipeRight:(UISwipeGestureRecognizer *) recognizer{
@@ -126,6 +177,7 @@ const int spriteHeight = 32;
 -(void) handleTap:(UITapGestureRecognizer *) recognizer{
     if(self.game.board.gameOver)
     {
+        self.backgroundMusic.currentTime = 0;
         [self.game start];
     }
     if (self.game.paused){
@@ -140,7 +192,6 @@ const int spriteHeight = 32;
     }
 }
 
-
 -(void)setupBoard{
     int w = (int)[self.game.board.array count];
     for(int i = 0; i < w; i++){
@@ -149,9 +200,9 @@ const int spriteHeight = 32;
         [self.sprites addObject:mut];
         int h = (int)[row count];
         for(int j = 0; j < h; j++){
-            SKShapeNode * shape = [SKShapeNode shapeNodeWithRectOfSize: CGSizeMake(32, 32)];
+            SKShapeNode * shape = [SKShapeNode shapeNodeWithRectOfSize: CGSizeMake(spriteWidth, spriteHeight)];
             shape.fillColor = [SKColor blueColor];
-            shape.position = CGPointMake(CGRectGetMidX(self.frame) + (j - h/2) * (spriteWidth + 1), CGRectGetMidY(self.frame) - (i - w/2) * (spriteHeight + 1));
+            shape.position = CGPointMake(CGRectGetMidX(self.frame) - 25 + (j - h/2) * (spriteWidth + 1), CGRectGetMidY(self.frame) + 25 - (i - w/2) * (spriteHeight + 1));
             
             [self addChild:shape];
             [mut addObject:shape];
@@ -205,6 +256,39 @@ const int spriteHeight = 32;
             SKShapeNode * shape = [[self.sprites objectAtIndex:coord.y] objectAtIndex:coord.x];
             shape.fillColor = [SKColor colorWithRed:0 green:0 blue:1 alpha:1];
         }
+    }
+    
+    if(self.game.board.hold != nil){
+        int counter = 0;
+        for(Coordinate * coord in [BlockData defaultDataFromType:self.game.board.hold.type].coordinates){
+            SKShapeNode * currentShape = [self.hold objectAtIndex:counter];
+            currentShape.hidden = false;
+            double x = CGRectGetMidX(self.frame) + 165 + ((coord.x) * (spriteWidth / offset + 1));
+            double y = CGRectGetMidY(self.frame) + 275 - (coord.y) * (spriteWidth / offset + 1);
+            currentShape.position = CGPointMake(x, y);
+            counter++;
+        }
+    }
+    else{
+        for(SKShapeNode * shape in self.hold){
+            shape.hidden = true;
+        }
+    }
+    int queueCounter = 0;
+    for(Block * block in self.game.board.queue){
+        if(block == nil){
+            break;
+        }
+        int counter = 0;
+        for(Coordinate * coord in [BlockData defaultDataFromType:block.type].coordinates){
+            SKShapeNode * currentShape = [[self.queue objectAtIndex:queueCounter] objectAtIndex:counter];
+            currentShape.hidden = false;
+            double x = CGRectGetMidX(self.frame) + 165 + ((coord.x) * (spriteWidth / offset + 1));
+            double y = CGRectGetMidY(self.frame) + 125 - (queueCounter * 125) - (coord.y) * (spriteWidth / offset + 1);
+            currentShape.position = CGPointMake(x, y);
+            counter++;
+        }
+        queueCounter++;
     }
 }
 

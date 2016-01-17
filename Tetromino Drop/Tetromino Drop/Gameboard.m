@@ -15,12 +15,12 @@
 }
 static const int rows = 20;
 static const int columns = 10;
-static const int queuelength = 3;
 -(instancetype) init
 {
     self = [super init];
     if (self)
     {
+        self.queueLength = 3;
         self.holdUsed = false;
         self.currentBlock = [Block randomBlock:self];
         [self resetBlockPosition];
@@ -28,7 +28,7 @@ static const int queuelength = 3;
         self.ghost.y = [self findGhost];
         self.hold = nil;
         self.queue = [[NSMutableArray alloc] init];
-        for (int i =0; i<queuelength; i++)
+        for (int i =0; i<self.queueLength; i++)
         {
             [self.queue addObject:[Block randomBlock:self]];
         }
@@ -89,11 +89,14 @@ static const int queuelength = 3;
     }
     if (self.hold == nil)
     {
+        self.blocksPlaced -= 4;
         self.hold = self.currentBlock;
         [self getBlockFromQueue];
     }
-    else
-    {
+    else if(self.hold.type == self.currentBlock.type){
+        return;
+    }
+    else {
         Block* repeatCurrentBlock = self.currentBlock;
         self.currentBlock = self.hold;
         [self resetBlockPosition];

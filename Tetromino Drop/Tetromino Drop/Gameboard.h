@@ -10,6 +10,7 @@
 @class Block;
 @interface Gameboard : NSObject
 
+@property int queueLength;
 @property int rowsCleared;
 @property int blocksPlaced;
 @property bool gameOver;
