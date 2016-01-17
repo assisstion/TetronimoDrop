@@ -9,6 +9,8 @@
 #import "GameScene.h"
 #import "Coordinate.h"
 #import "BlockData.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
 @implementation GameScene
 
@@ -23,14 +25,18 @@ const int spriteHeight = 32;
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     UILongPressGestureRecognizer *longPressGesture= [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
+    UISwipeGestureRecognizer* swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:
+                                                @selector(handleSwipeUp:)];
     longPressGesture.minimumPressDuration = 1.0; //seconds
     longPressGesture.delegate = self;
     [swipeRightGesture setDirection: UISwipeGestureRecognizerDirectionRight];
     [swipeLeftGesture setDirection: UISwipeGestureRecognizerDirectionLeft];
     [swipeDownGesture setDirection: UISwipeGestureRecognizerDirectionDown];
+    [swipeUpGesture setDirection: UISwipeGestureRecognizerDirectionUp];
     [view addGestureRecognizer: swipeRightGesture];
     [view addGestureRecognizer: swipeLeftGesture];
     [view addGestureRecognizer: swipeDownGesture];
+    [view addGestureRecognizer: swipeUpGesture];
     [view addGestureRecognizer: tapGesture];
     [view addGestureRecognizer:longPressGesture];
     
@@ -58,6 +64,20 @@ const int spriteHeight = 32;
                                             CGRectGetMidY(self.frame));
     
     
+    self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
+    self.scoreLabel.text = @"Rows Cleared:";
+    self.scoreLabel.fontColor = [UIColor blueColor];
+    self.scoreLabel.fontSize = 24;
+    self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                           CGRectGetMidY(self.frame) - self.frame.size.height / 2 + 30);
+    
+    
+    self.blocksPlacedLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
+    self.blocksPlacedLabel.text = @"Blocks Placed:";
+    self.blocksPlacedLabel.fontColor = [UIColor blueColor];
+    self.blocksPlacedLabel.fontSize = 24;
+    self.blocksPlacedLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                           CGRectGetMidY(self.frame) - self.frame.size.height / 2 + 50);
     
     self.sprites = [[NSMutableArray alloc] init];
     self.game = [[Game alloc] init];
@@ -70,6 +90,10 @@ const int spriteHeight = 32;
     [self.gameOverBox addChild:myLabel];
     [self addChild:self.gameOverBox];
     
+    [self addChild:self.scoreLabel];
+    [self addChild:self.blocksPlacedLabel];
+    
+ 
 }
 
 -(void) handleSwipeRight:(UISwipeGestureRecognizer *) recognizer{
@@ -91,6 +115,12 @@ const int spriteHeight = 32;
         return;
     }
     [self.game.board.currentBlock instantDrop];
+}
+-(void) handleSwipeUp:(UISwipeGestureRecognizer *) recognizer{
+    if (self.game.paused){
+        return;
+    }
+    [self.game.board holdBlock];
 }
 
 -(void) handleTap:(UITapGestureRecognizer *) recognizer{
@@ -131,11 +161,11 @@ const int spriteHeight = 32;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
-    
-    
 }
 
 -(void)renderBoard{
+    self.scoreLabel.text = [@"Rows Cleared:" stringByAppendingString:[NSString stringWithFormat:@"%i", self.game.board.rowsCleared]];
+    self.blocksPlacedLabel.text = [@" Blocks Placed:" stringByAppendingString:[NSString stringWithFormat:@"%i", self.game.board.blocksPlaced]];
     if(self.game.paused)
     {
         self.gamePausedBox.hidden = false;

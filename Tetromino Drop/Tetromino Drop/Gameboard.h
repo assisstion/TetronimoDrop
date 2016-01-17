@@ -11,6 +11,7 @@
 @interface Gameboard : NSObject
 
 @property int rowsCleared;
+@property int blocksPlaced;
 @property bool gameOver;
 @property Block * currentBlock;
 @property Block * ghost;
@@ -22,7 +23,7 @@
 -(void)deleteRows;
 -(BOOL) checkBlock: (Block*) block;
 -(void)holdBlock;
--(void) nextBlock;
+-(void)getBlockFromQueue;
 -(void)permanent;
 -(int)findGhost;
 -(bool)justUpdated;

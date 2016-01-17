@@ -21,14 +21,16 @@ static const int queuelength = 3;
     self = [super init];
     if (self)
     {
-        self.currentBlock = [self getNextBlock];
+        self.holdUsed = false;
+        self.currentBlock = [Block randomBlock:self];
+        [self resetBlockPosition];
         self.ghost = [[Block alloc] initFromBlock:self.currentBlock];
         self.ghost.y = [self findGhost];
         self.hold = nil;
         self.queue = [[NSMutableArray alloc] init];
         for (int i =0; i<queuelength; i++)
         {
-            [self.queue addObject:[self getNextBlock]];
+            [self.queue addObject:[Block randomBlock:self]];
         }
         self.array = [[NSMutableArray alloc] init];
         for (int i =0; i<rows; i++)
@@ -36,6 +38,7 @@ static const int queuelength = 3;
             [self.array addObject:[Gameboard emptyRow]];
         }
         self.rowsCleared = 0;
+        self.blocksPlaced = 0;
     }
     return self;
     
@@ -62,6 +65,7 @@ static const int queuelength = 3;
             self.rowsCleared++;
         }
     }
+
     
 }
 
@@ -86,21 +90,40 @@ static const int queuelength = 3;
     if (self.hold == nil)
     {
         self.hold = self.currentBlock;
-        [self nextBlock];
-        
+        [self getBlockFromQueue];
     }
     else
     {
         Block* repeatCurrentBlock = self.currentBlock;
         self.currentBlock = self.hold;
+        [self resetBlockPosition];
         self.hold = repeatCurrentBlock;
     }
     self.holdUsed = true;
 }
--(void) nextBlock
+-(void) getBlockFromQueue
 {
     self.currentBlock = [self.queue objectAtIndex:0];
     [self.queue removeObjectAtIndex:0];
+    [self.queue addObject:[Block randomBlock:self]];
+    self.blocksPlaced += 4;
+    [self resetBlockPosition];
+}
+-(void)resetBlockPosition{
+    self.currentBlock.x = columns / 2;
+    self.currentBlock.y = 0;
+    self.currentBlock.orientation = 0;
+    while (![self onScreen:self.currentBlock])
+    {
+        self.currentBlock.y++;
+    }
+    [self.currentBlock blockChanged];
+    if(![self checkBlock:self.currentBlock]){
+        self.gameOver = true;
+        self.ghost = nil;
+        self.currentBlock = nil;
+        return;
+    }
 }
 
 - (int) findGhost
@@ -149,16 +172,8 @@ static const int queuelength = 3;
     self.ghost.y = [self findGhost];
     if(self.currentBlock.y == self.ghost.y){
         [self permanent];
-        self.currentBlock = [self.queue objectAtIndex:0];
-        [self.currentBlock blockChanged];
-        if(![self checkBlock:self.currentBlock]){
-            self.gameOver = true;
-            self.ghost = nil;
-            self.currentBlock = nil;
-            return;
-        }
-        [self.queue removeObjectAtIndex:0];
-        [self.queue addObject:[self getNextBlock]];
+        [self getBlockFromQueue];
+        self.holdUsed = false;
     }
     else{
         self.currentBlock.y++;
@@ -178,15 +193,5 @@ static const int queuelength = 3;
         [[self.array objectAtIndex:coord.y] replaceObjectAtIndex:coord.x withObject:[[NSNumber alloc] initWithBool:true]];
     }
 }
--(Block *)getNextBlock{
-    Block * newBlock= [Block randomBlock:self];
-    newBlock.x = columns / 2;
-    while (![self onScreen:newBlock])
-    {
-        newBlock.y++;
-    }
-    return newBlock;
-}
-
 
 @end
