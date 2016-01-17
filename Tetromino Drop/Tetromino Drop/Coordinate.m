@@ -4,7 +4,8 @@
 //
 //  Created by Markus Feng on 1/8/16.
 //  Copyright © 2016 assisstion. All rights reserved.
-//
+
+// Set up the coordinate system and logic for rotating pieces using invertion
 
 #import "Coordinate.h"
 

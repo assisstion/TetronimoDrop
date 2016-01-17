@@ -4,7 +4,8 @@
 //
 //  Created by ajha17 on 1/7/16.
 //  Copyright © 2016 assisstion. All rights reserved.
-//
+
+// Set up methods to check whether the block is on the board, whether the block is touching another block, initialize the gameboard, and be able to delete and create rows on the gameboard.
 
 #import "Gameboard.h"
 #import "Block.h"

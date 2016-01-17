@@ -4,7 +4,7 @@
 //
 //  Created by ajha17 on 1/5/16.
 //  Copyright (c) 2016 assisstion. All rights reserved.
-//
+// This program recreates Tetris. It has the ability to rotate blocks and move them left and right by tapping and swiping left and right. The game can be paused by a long tap, or tapping for more than one second. There is also a hold which is displayed on the right side and can be accessed by swiping up. Each block has a ghost which shows where it will go. A block can be instantly dropped by swiping down.  There is also a queue displayed on the right side of the next 3 upcoming blocks. The game ends when blocks exceed the upper limit of the board. The game scales in difficulty with the number of rows that are cleared. Blocks that are dropped are randomly decided. The score is displayed at the bottom of the screen with blocks placed and rows cleared. There is also background music that restarts when the game restarts;a small glitch with the music player in which the exception breakpoint must be altered to only objective c breakpoints.
 
 #import "Gameboard.h"
 #import "GameScene.h"
@@ -20,6 +20,8 @@ const int spriteHeight = 32;
 const double offset = 1.5;
 
 -(void)didMoveToView:(SKView *)view {
+    
+    // Set up the different gestures and the gesture recognizers
     
     UISwipeGestureRecognizer* swipeRightGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeRight:)];
     UISwipeGestureRecognizer* swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeLeft:)];
@@ -43,6 +45,7 @@ const double offset = 1.5;
     [view addGestureRecognizer:longPressGesture];
     
     
+    // Creates different labels and boxes to display text in the app
     SKLabelNode * myLabel = [SKLabelNode labelNodeWithFontNamed:@"Helvetica Neue"];
     myLabel.text = @"Game Over! Tap to Restart.";
     myLabel.fontColor = [UIColor redColor];
@@ -110,6 +113,8 @@ const double offset = 1.5;
     [self addChild:self.holdLabel];
     [self addChild:self.queueLabel];
     
+    
+    //Adds music to the game
     NSURL *musicFile = [[NSBundle mainBundle] URLForResource:@"tetris"
                                                withExtension:@"mp3"];
     self.backgroundMusic = [[AVAudioPlayer alloc] initWithContentsOfURL:musicFile
@@ -147,6 +152,8 @@ const double offset = 1.5;
     return @[[GameScene newShape], [GameScene newShape], [GameScene newShape], [GameScene newShape]];
 }
 
+
+// More methods for handling gestures
 -(void) handleSwipeRight:(UISwipeGestureRecognizer *) recognizer{
     if (self.game.paused){
         return;
@@ -192,6 +199,7 @@ const double offset = 1.5;
     }
 }
 
+//Set up and render the gameboard
 -(void)setupBoard{
     int w = (int)[self.game.board.array count];
     for(int i = 0; i < w; i++){
@@ -213,6 +221,7 @@ const double offset = 1.5;
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
 }
+
 
 -(void)renderBoard{
     self.scoreLabel.text = [@"Rows Cleared:" stringByAppendingString:[NSString stringWithFormat:@"%i", self.game.board.rowsCleared]];

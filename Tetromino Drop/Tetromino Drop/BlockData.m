@@ -4,7 +4,9 @@
 //
 //  Created by Markus Feng on 1/8/16.
 //  Copyright © 2016 assisstion. All rights reserved.
-//
+
+
+// Set up the different types of Blocks using the coordinate system and make the 0,0 piece the rotation point for the different blocks. Also set the base orientation when a block is generated
 
 #import "BlockData.h"
 #import "Block.h"

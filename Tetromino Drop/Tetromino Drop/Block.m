@@ -4,7 +4,8 @@
 //
 //  Created by ajha17 on 1/7/16.
 //  Copyright © 2016 assisstion. All rights reserved.
-//
+
+// Create the methods for generating a random block and rotating, moving and instantly dropping a block. Also has a method when hold is called to reset the orientation of the ghost. 
 
 #import "Block.h"
 #import "Gameboard.h"
