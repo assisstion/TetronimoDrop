@@ -5,7 +5,7 @@
 //  Created by ajha17 on 1/7/16.
 //  Copyright © 2016 assisstion. All rights reserved.
 
-// Logic for pausing the game
+// Logic for pausing the game, speeding up the game based on rows cleared and updating different time intervals
 
 #import "Game.h"
 
