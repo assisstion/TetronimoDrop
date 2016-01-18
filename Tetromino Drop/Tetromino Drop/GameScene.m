@@ -4,6 +4,7 @@
 //
 //  Created by ajha17 on 1/5/16.
 //  Copyright (c) 2016 assisstion. All rights reserved.
+// Created by Markus Feng and Aditya Jha
 // This program recreates Tetris. It has the ability to rotate blocks and move them left and right by tapping and swiping left and right. The game can be paused by a long tap, or tapping for more than one second. There is also a hold which is displayed on the right side and can be accessed by swiping up. Each block has a ghost which shows where it will go. A block can be instantly dropped by swiping down.  There is also a queue displayed on the right side of the next 3 upcoming blocks. The game ends when blocks exceed the upper limit of the board. The game scales in difficulty with the number of rows that are cleared. Blocks that are dropped are randomly decided. The score is displayed at the bottom of the screen with blocks placed and rows cleared. There is also background music that restarts when the game restarts;a small glitch with the music player in which the exception breakpoint must be altered to only objective c breakpoints.
 
 #import "Gameboard.h"
